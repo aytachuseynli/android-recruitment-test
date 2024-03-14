@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.aytachuseynli.algoritmatask"
-    compileSdk = 34
+    compileSdk = 31
 
     defaultConfig {
         applicationId = "com.aytachuseynli.algoritmatask"
         minSdk = 21
-        targetSdk = 34
+        targetSdk = 31
         versionCode = 1
         versionName = "1.0"
 
