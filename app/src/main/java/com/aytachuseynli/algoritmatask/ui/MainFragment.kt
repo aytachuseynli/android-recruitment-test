@@ -1,10 +1,11 @@
-package com.aytachuseynli.algoritmatask
+package com.aytachuseynli.algoritmatask.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.aytachuseynli.algoritmatask.R
 
 class MainFragment : Fragment() {
     override fun onCreateView(

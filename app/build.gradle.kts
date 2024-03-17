@@ -1,11 +1,17 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
     namespace = "com.aytachuseynli.algoritmatask"
     compileSdk = 31
+
+    buildFeatures{
+        viewBinding = true
+        dataBinding = true
+    }
 
     defaultConfig {
         applicationId = "com.aytachuseynli.algoritmatask"
@@ -44,4 +50,8 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    //WebSocket
+    implementation("io.ktor:ktor-client-android:1.6.4")
+    implementation("io.ktor:ktor-client-websockets:1.6.4")
 }

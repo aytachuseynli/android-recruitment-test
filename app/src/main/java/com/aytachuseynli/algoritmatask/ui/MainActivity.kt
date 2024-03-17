@@ -1,7 +1,8 @@
-package com.aytachuseynli.algoritmatask
+package com.aytachuseynli.algoritmatask.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.aytachuseynli.algoritmatask.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
