@@ -1,12 +1,16 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("androidx.navigation.safeargs")
+    id("kotlin-parcelize")
     id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
     namespace = "com.aytachuseynli.algoritmatask"
-    compileSdk = 31
+    compileSdk = 34
 
     buildFeatures{
         viewBinding = true
@@ -15,8 +19,8 @@ android {
 
     defaultConfig {
         applicationId = "com.aytachuseynli.algoritmatask"
-        minSdk = 21
-        targetSdk = 31
+        minSdk = 24
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -54,4 +58,22 @@ dependencies {
     //WebSocket
     implementation("io.ktor:ktor-client-android:1.6.4")
     implementation("io.ktor:ktor-client-websockets:1.6.4")
+
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+
+    //Okhttp
+    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.2")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
+
+    //MVVM
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+
+    //Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+    //Hilt
+    implementation("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-android-compiler:2.49")
 }
