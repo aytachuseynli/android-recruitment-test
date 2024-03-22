@@ -3,7 +3,7 @@ package com.aytachuseynli.algoritmatask.data.local.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity (tableName = "socket_model_table")
 data class SocketModel (
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,

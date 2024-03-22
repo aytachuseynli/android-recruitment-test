@@ -13,5 +13,6 @@ class MainViewModel @Inject constructor(
     private val socketRepository: SocketRepository
 ) : ViewModel() {
 
-//    val socketModelList: Flow<List<SocketModel>> = socketRepository.getSocketModels()
+    val socketModelList: Flow<List<SocketModel>> = socketRepository.getSocketModels()
+
 }
