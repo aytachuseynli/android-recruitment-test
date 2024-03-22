@@ -13,4 +13,12 @@ class SocketRepository @Inject constructor(
         return socketDao.getAllSocketModels()
     }
 
+    fun disconnect(){
+
+    }
+
+    fun connect(){
+
+    }
+
 }
