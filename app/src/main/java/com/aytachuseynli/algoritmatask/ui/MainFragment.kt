@@ -28,6 +28,9 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.recyclerView.adapter = adapter
+
+
     }
 
 
@@ -36,3 +39,4 @@ class MainFragment : Fragment() {
         _binding = null
     }
 }
+

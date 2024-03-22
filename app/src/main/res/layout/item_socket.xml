@@ -24,7 +24,19 @@
             android:textStyle="bold"
             android:textSize="23sp"
             android:drawablePadding="8dp"
-            android:drawableLeft="@drawable/ic_change"/>
+            android:drawableLeft="@drawable/ic_change"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="rate"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
