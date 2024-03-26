@@ -3,7 +3,6 @@ package com.aytachuseynli.algoritmatask.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.aytachuseynli.algoritmatask.R
-import com.aytachuseynli.algoritmatask.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

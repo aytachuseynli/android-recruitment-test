@@ -17,37 +17,21 @@ class WebSocketAdapter : ListAdapter<SocketModel, WebSocketAdapter.ViewHolder>(
         myContentsTheSame = { oldItem, newItem -> oldItem == newItem }
     )
 ) {
-    var socketList: MutableList<SocketModel>
-        get() = currentList
-        set(value) = submitList(value)
-
-    inner class ViewHolder(private val binding: ItemSocketBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: SocketModel) {
-            with(binding) {
-
-                name.text = item.name
-                valueOne.text = item.valueOne
-                valueTwo.text = item.valueTwo
-                valueThree.text = item.valueThree
-                valueFour.text = item.valueFour
-                rating.text = item.rating
-
-            }
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = ItemSocketBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(view)
+        val binding = ItemSocketBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return socketList.size
+    inner class ViewHolder(private val binding: ItemSocketBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(socketModel: SocketModel) {
+            binding.socketModel = socketModel
+            binding.executePendingBindings()
+        }
     }
 }

@@ -1,73 +1,91 @@
 package com.aytachuseynli.algoritmatask.ui
 
+import android.content.Context
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aytachuseynli.algoritmatask.data.local.model.SocketEvent
-import com.aytachuseynli.algoritmatask.data.local.model.SocketModel
 import com.aytachuseynli.algoritmatask.data.local.model.SocketListener
+import com.aytachuseynli.algoritmatask.data.local.model.SocketModel
+import com.aytachuseynli.algoritmatask.data.network.SocketInstance
 import com.aytachuseynli.algoritmatask.data.repository.SocketRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val socketRepository: SocketRepository,
-    private val connectivityManager: ConnectivityManager
+    private val socketRepository: SocketRepository
 ) : ViewModel(), SocketListener {
 
     private val _socketModelList = MutableStateFlow<List<SocketModel>>(emptyList())
     val socketModelList: StateFlow<List<SocketModel>> get() = _socketModelList
 
+    private val _isOnline = MutableStateFlow(false)
+    val isOnline: StateFlow<Boolean> get() = _isOnline
+
+    fun checkInternetConnectivity(context: Context) {
+        val isOnline = isOnline(context)
+        _isOnline.value = isOnline
+
+        if (isOnline) {
+            // Establish WebSocket connection if online
+            SocketInstance.setSocket()
+            SocketInstance.establishConnection()
+        }
+    }
+
+    private fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork ?: return false
+        val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+    }
+
     init {
         // Connect to socket when ViewModel is created
-        connectSocket()
+        connectToWebSocket()
     }
 
-    private fun connectSocket() {
+    private fun connectToWebSocket() {
+        SocketInstance.addListener(this)
+    }
+
+    override fun onConnect() {
+        // Handle socket connection event if needed
         viewModelScope.launch {
-            socketRepository.connect()
+            _isOnline.emit(true)
         }
+
+
     }
 
-    private fun disconnectSocket() {
+    override fun onDisconnect() {
+        // Handle socket disconnection event if needed
         viewModelScope.launch {
-            socketRepository.disconnect()
+            _isOnline.emit(false)
         }
     }
 
-    override fun onEvent(event: SocketEvent) {
-        when (event) {
-            is SocketEvent.Connect -> {
-
-            }
-            is SocketEvent.Disconnect -> {
-
-            }
-            is SocketEvent.Error -> {
-
-            }
-            is SocketEvent.Data -> {
-                updateUIWithData(event.data)
-            }
-        }
+    override fun onError(error: Throwable?) {
+        // Handle socket error event if needed
     }
 
-    private fun updateUIWithData(data: JSONObject) {
-        // Update UI with new data
-        val socketModel = SocketModel(data)
-        val updatedList = _socketModelList.value.toMutableList()
-        updatedList.add(socketModel)
-        _socketModelList.value = updatedList
+    override fun onDataReceived(data: String?) {
+        // Update UI with received data
+//        data?.let {
+//            val socketModel = SocketModel(it) // Assuming SocketModel constructor takes a String parameter
+//            _socketModelList.value += socketModel
+//        }
     }
 
     override fun onCleared() {
-        // Disconnect socket when ViewModel is cleared
-        disconnectSocket()
+        // Remove listener when ViewModel is cleared
+        SocketInstance.removeListener(this)
         super.onCleared()
     }
 }

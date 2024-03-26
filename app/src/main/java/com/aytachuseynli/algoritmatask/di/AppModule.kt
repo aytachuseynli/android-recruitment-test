@@ -1,6 +1,7 @@
 package com.aytachuseynli.algoritmatask.di
 
 import android.content.Context
+import android.net.ConnectivityManager
 import androidx.room.Room
 import com.aytachuseynli.algoritmatask.data.local.dao.AppDatabase
 import com.aytachuseynli.algoritmatask.data.local.dao.SocketDao
@@ -28,7 +29,6 @@ object AppModule {
         ).build()
     }
 
-
     @Provides
     @Singleton
     fun provideSocketDao(database: AppDatabase): SocketDao {
@@ -43,9 +43,16 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMainViewModel(socketRepository: SocketRepository): MainViewModel {
-        return MainViewModel(socketRepository)
+    fun provideConnectivityManager(@ApplicationContext context: Context): ConnectivityManager {
+        return context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
 
+    @Provides
+    @Singleton
+    fun provideMainViewModel(
+        socketRepository: SocketRepository
+    ): MainViewModel {
+        return MainViewModel(socketRepository)
+    }
 
 }

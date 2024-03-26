@@ -1,83 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/itemSocket"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardElevation="20dp"
-    android:layout_marginTop="20dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    app:cardCornerRadius="10dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+    <variable
+        name="socketModel"
+        type="com.aytachuseynli.algoritmatask.data.local.model.SocketModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/itemSocket"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
+        app:cardElevation="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:cardCornerRadius="10dp">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name"
-            android:textStyle="bold"
-            android:textSize="23sp"
-            android:drawablePadding="8dp"
-            android:drawableLeft="@drawable/ic_change"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:orientation="vertical"
+            android:padding="12dp">
 
-        <TextView
-            android:id="@+id/rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="rate"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{socketModel.name}"
+                android:hint="Name"
+                android:textStyle="bold"
+                android:textSize="23sp"
+                android:drawablePadding="8dp"
+                android:drawableLeft="@drawable/ic_change"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/name"
-        app:layout_constraintBottom_toBottomOf="parent">
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{socketModel.rating}"
+                android:hint="rate"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/valueOne"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Value 1"
-            android:layout_marginEnd="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/name"
+                app:layout_constraintBottom_toBottomOf="parent">
 
-        <TextView
-            android:id="@+id/valueTwo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Value 2"
-            android:layout_marginEnd="10dp"/>
+                <TextView
+                    android:id="@+id/valueOne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Value 1"
+                    android:text="@{socketModel.valueOne}"
+                    android:layout_marginEnd="10dp" />
 
-        <TextView
-            android:id="@+id/valueThree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Value 3"
-            android:layout_marginEnd="10dp"/>
+                <TextView
+                    android:id="@+id/valueTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Value 2"
+                    android:text="@{socketModel.valueTwo}"
+                    android:layout_marginEnd="10dp" />
 
-        <TextView
-            android:id="@+id/valueFour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Value 4"
-            android:layout_marginEnd="10dp"/>
+                <TextView
+                    android:id="@+id/valueThree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Value 3"
+                    android:text="@{socketModel.valueThree}"
+                    android:layout_marginEnd="10dp" />
+
+                <TextView
+                    android:id="@+id/valueFour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Value 4"
+                    android:text="@{socketModel.valueFour}"
+                    android:layout_marginEnd="10dp" />
 
 
-    </LinearLayout>
+            </LinearLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+</layout>
