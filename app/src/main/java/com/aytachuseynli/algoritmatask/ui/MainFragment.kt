@@ -37,6 +37,7 @@ class MainFragment : Fragment() {
         binding.progressBar.visibility = View.VISIBLE
         binding.recyclerView.adapter = adapter
 
+
         // Observe socket model list and update adapter
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.socketModelList.collect { socketList ->
@@ -53,16 +54,10 @@ class MainFragment : Fragment() {
         // Observe connection status and update UI text color
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.socketIsConnected.collect { isConnected ->
-                if (isConnected) {
-                    binding.connectionStatusTextView.text = "Connected"
-                    binding.connectionStatusTextView.setTextColor(Color.GREEN)
-                } else {
-                    binding.connectionStatusTextView.text = "No Internet Connection"
-                    binding.connectionStatusTextView.setTextColor(Color.RED)
-                }
+                val backgroundColor = if (isConnected) Color.GREEN else Color.RED
+                binding.connectionIndicator.setBackgroundColor(backgroundColor)
             }
         }
-
 
         // Register connectivity receiver to listen for changes
         registerConnectivityReceiver()

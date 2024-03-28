@@ -11,7 +11,7 @@ object ImageBindingAdapters {
     @BindingAdapter("upDownImage")
     fun setUpDownImage(imageView: ImageView, upDown: String?) {
         upDown?.let {
-            val imageResource = if (it.equals("increase", ignoreCase = true)) {
+            val imageResource = if (it.equals("up", ignoreCase = true)) {
                 R.drawable.ic_up
             } else {
                 R.drawable.ic_down
