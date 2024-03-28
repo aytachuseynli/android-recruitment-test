@@ -3,6 +3,8 @@ package com.aytachuseynli.algoritmatask.data.repository
 import com.aytachuseynli.algoritmatask.data.local.dao.SocketDao
 import com.aytachuseynli.algoritmatask.data.local.model.SocketModel
 import com.aytachuseynli.algoritmatask.data.network.SocketInstance
+import com.github.nkzawa.socketio.client.IO
+import com.github.nkzawa.socketio.client.Socket
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -13,9 +15,11 @@ class SocketRepository @Inject constructor(
 ) {
 
     // Save data to local and cache
-    suspend fun saveData(socketModel: SocketModel) {
+    suspend fun saveData(socketModelList: List<SocketModel>) {
         withContext(Dispatchers.IO) {
-            socketDao.insert(socketModel)
+            socketModelList.forEach { socketModel ->
+                socketDao.insert(socketModel)
+            }
         }
     }
 
@@ -32,9 +36,14 @@ class SocketRepository @Inject constructor(
     }
 
     // Get data from URL using SocketInstance
-    fun getFromUrl(): SocketInstance {
+    fun getFromUrl(): Socket {
         SocketInstance.setSocket()
         SocketInstance.establishConnection()
-        return SocketInstance
+        val mSocket = SocketInstance.getSocket()
+        mSocket.connect()
+        val options = IO.Options()
+        options.reconnection = true
+        options.forceNew = true
+        return mSocket
     }
 }

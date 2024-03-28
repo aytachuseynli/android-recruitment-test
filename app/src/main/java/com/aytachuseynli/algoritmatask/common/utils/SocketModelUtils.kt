@@ -1,28 +1,41 @@
-package com.aytachuseynli.algoritmatask.common.utils
-
 import com.aytachuseynli.algoritmatask.data.local.model.SocketModel
 import org.json.JSONObject
 
-fun extractDataFromJSONObject(data: JSONObject): SocketModel {
-    // Extract data from JSONObject
-    val change = data.getString("change")
-    val name = data.getString("name")
-    val valueOne = data.getString("valueOne")
-    val valueTwo = data.getString("valueTwo")
-    val valueThree = data.getString("valueThree")
-    val valueFour = data.getString("valueFour")
-    val rating = data.getString("rating")
-    val date = data.getString("date")
+fun convert(from: Array<out Any>, to: Array<Any>): List<SocketModel> {
+    val socketList = mutableListOf<SocketModel>()
+    assert(from.size == to.size)
+    for (i in from.indices)
+        to[i] = from[i]
+    val list = mutableListOf<String>()
+    for (i in to.indices) {
+        list.add(to[i].toString())
+    }
+    val jsonObject = JSONObject(list[0])
+    val jsonArray = jsonObject.getJSONArray("result")
+    for (i in 0 until jsonArray.length())
+     {
+         val jsonObject = jsonArray.getJSONObject(i)
 
-    // Create and return SocketModel instance
-    return SocketModel(
-        change = change,
-        name = name,
-        valueOne = valueOne,
-        valueTwo = valueTwo,
-        valueThree = valueThree,
-        valueFour = valueFour,
-        rating = rating,
-        date = date
-    )
+        val upDown = jsonObject.optString("0")
+        val name = jsonObject.optString("1")
+        val valueOne = jsonObject.optString("2")
+        val valueTwo = jsonObject.optString("3")
+        val valueThree = jsonObject.optString("4")
+        val valueFour = jsonObject.optString("5")
+        val rating = jsonObject.optString("6")
+        val date = jsonObject.optString("7")
+
+        val socketModel = SocketModel(
+            upDown = upDown,
+            name = name,
+            valueOne = valueOne,
+            valueTwo = valueTwo,
+            valueThree = valueThree,
+            valueFour = valueFour,
+            rating = rating,
+            date = date
+        )
+         socketList.add(socketModel)
+    }
+    return socketList
 }

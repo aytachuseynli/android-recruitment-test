@@ -1,7 +1,6 @@
 package com.aytachuseynli.algoritmatask.data.local.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.aytachuseynli.algoritmatask.data.local.model.SocketModel

@@ -1,75 +1,34 @@
 package com.aytachuseynli.algoritmatask.data.network
 
 import com.aytachuseynli.algoritmatask.common.utils.Constant
-import com.aytachuseynli.algoritmatask.data.local.model.SocketListener
-import okhttp3.WebSocket
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
-import okhttp3.WebSocketListener
-import okio.ByteString
-import java.util.concurrent.TimeUnit
+import com.github.nkzawa.socketio.client.IO
+import com.github.nkzawa.socketio.client.Socket
+import java.net.URISyntaxException
 
 object SocketInstance {
-    private lateinit var webSocket: WebSocket
-    private val listeners = mutableListOf<SocketListener>()
+    lateinit var mSocket: Socket
 
+    @Synchronized
     fun setSocket() {
-        val request = Request.Builder().url(Constant.URL).build()
-        val client = OkHttpClient.Builder()
-            .readTimeout(0, TimeUnit.MILLISECONDS)
-            .build()
+        try {
+            mSocket = IO.socket(Constant.URL)
+        } catch (e: URISyntaxException) {
 
-        val webSocketListener = object : WebSocketListener() {
-            override fun onOpen(webSocket: WebSocket, response: Response) {
-                super.onOpen(webSocket, response)
-                println("WebSocket connected")
-                // Notify listeners about socket connection
-                listeners.forEach { it.onConnect() }
-            }
-
-            override fun onMessage(webSocket: WebSocket, text: String) {
-                super.onMessage(webSocket, text)
-                // Log or print the received JSON data
-                println("Received JSON data: $text")
-                // Notify listeners about received data
-                listeners.forEach { it.onDataReceived(text) }
-            }
-
-            override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
-                super.onMessage(webSocket, bytes)
-            }
-
-            override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-                super.onClosed(webSocket, code, reason)
-                // Notify listeners about socket disconnection
-                listeners.forEach { it.onDisconnect() }
-            }
-
-            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-                super.onFailure(webSocket, t, response)
-                // Notify listeners about socket error
-                listeners.forEach { it.onError(t) }
-            }
         }
-
-        webSocket = client.newWebSocket(request, webSocketListener)
     }
 
-    fun disconnectWebSocket() {
-        webSocket.cancel()
+    @Synchronized
+    fun getSocket(): Socket {
+        return mSocket
     }
 
-    fun addListener(listener: SocketListener) {
-        listeners.add(listener)
-    }
-
-    fun removeListener(listener: SocketListener) {
-        listeners.remove(listener)
-    }
-
+    @Synchronized
     fun establishConnection() {
-        setSocket()
+        mSocket.connect()
+    }
+
+    @Synchronized
+    fun closeConnection() {
+        mSocket.disconnect()
     }
 }
-

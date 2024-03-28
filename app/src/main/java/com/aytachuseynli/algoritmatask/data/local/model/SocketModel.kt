@@ -3,11 +3,11 @@ package com.aytachuseynli.algoritmatask.data.local.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity (tableName = "socket_model_table")
-data class SocketModel (
+@Entity(tableName = "socket_model_table")
+data class SocketModel(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
-    val change: String,
+    var id: Int? = null,
+    val upDown: String,
     val name: String,
     val valueOne: String,
     val valueTwo: String,

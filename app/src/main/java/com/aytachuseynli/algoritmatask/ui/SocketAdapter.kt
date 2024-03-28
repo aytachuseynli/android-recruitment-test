@@ -4,16 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.aytachuseynli.algoritmatask.common.utils.GenericDiffUtil
 import com.aytachuseynli.algoritmatask.data.local.model.SocketModel
 import com.aytachuseynli.algoritmatask.databinding.ItemSocketBinding
-import okhttp3.internal.platform.android.SocketAdapter
 
-
-class WebSocketAdapter : ListAdapter<SocketModel, WebSocketAdapter.ViewHolder>(
+class SocketAdapter : ListAdapter<SocketModel, SocketAdapter.ViewHolder>(
     GenericDiffUtil<SocketModel>(
-        myItemsTheSame = { oldItem, newItem -> oldItem.id == newItem.id },
+        myItemsTheSame = { oldItem, newItem -> oldItem == newItem },
         myContentsTheSame = { oldItem, newItem -> oldItem == newItem }
     )
 ) {
