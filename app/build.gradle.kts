@@ -90,5 +90,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.50")
     kapt("com.google.dagger:hilt-android-compiler:2.49")
 
+    implementation("com.google.code.gson:gson:2.8.8")
+
 
 }

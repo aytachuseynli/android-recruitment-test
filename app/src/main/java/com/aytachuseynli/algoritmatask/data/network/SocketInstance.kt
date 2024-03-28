@@ -20,15 +20,18 @@ object SocketInstance {
             .readTimeout(0, TimeUnit.MILLISECONDS)
             .build()
 
-        webSocket = client.newWebSocket(request, object : WebSocketListener() {
+        val webSocketListener = object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
                 super.onOpen(webSocket, response)
+                println("WebSocket connected")
                 // Notify listeners about socket connection
                 listeners.forEach { it.onConnect() }
             }
 
             override fun onMessage(webSocket: WebSocket, text: String) {
                 super.onMessage(webSocket, text)
+                // Log or print the received JSON data
+                println("Received JSON data: $text")
                 // Notify listeners about received data
                 listeners.forEach { it.onDataReceived(text) }
             }
@@ -48,7 +51,9 @@ object SocketInstance {
                 // Notify listeners about socket error
                 listeners.forEach { it.onError(t) }
             }
-        })
+        }
+
+        webSocket = client.newWebSocket(request, webSocketListener)
     }
 
     fun disconnectWebSocket() {
@@ -67,3 +72,4 @@ object SocketInstance {
         setSocket()
     }
 }
+

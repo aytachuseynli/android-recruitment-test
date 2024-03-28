@@ -6,6 +6,7 @@ import android.net.NetworkCapabilities
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.room.Update
 import com.aytachuseynli.algoritmatask.data.local.model.SocketListener
 import com.aytachuseynli.algoritmatask.data.local.model.SocketModel
 import com.aytachuseynli.algoritmatask.data.network.SocketInstance
@@ -76,9 +77,9 @@ class MainViewModel @Inject constructor(
     }
 
     override fun onDataReceived(data: String?) {
-        // Update UI with received data
+//         Update UI with received data
 //        data?.let {
-//            val socketModel = SocketModel(it) // Assuming SocketModel constructor takes a String parameter
+//            val socketModel = SocketModel(it)
 //            _socketModelList.value += socketModel
 //        }
     }
