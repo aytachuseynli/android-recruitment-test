@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.aytachuseynli.algoritmatask.common.utils.ConnectivityUtil
 import com.aytachuseynli.algoritmatask.databinding.FragmentMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -37,13 +36,13 @@ class MainFragment : Fragment() {
         binding.recyclerView.adapter = adapter
 
         // Observe socket model list and update adapter
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.socketModelList.collect { socketList ->
                 adapter.submitList(socketList)
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.isLoading.collect { isLoading ->
                 binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
             }
@@ -56,15 +55,11 @@ class MainFragment : Fragment() {
                 binding.connectionIndicator.setBackgroundColor(backgroundColor)
             }
         }
-
-        // Register connectivity receiver to listen for changes
-        ConnectivityUtil.registerConnectivityReceiver(requireContext())
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        // Unregister connectivity receiver when fragment is destroyed
-        ConnectivityUtil.unregisterConnectivityReceiver(requireContext())
     }
 }
+

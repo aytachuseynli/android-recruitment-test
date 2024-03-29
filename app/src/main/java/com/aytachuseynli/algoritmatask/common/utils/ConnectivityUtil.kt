@@ -1,13 +1,13 @@
 package com.aytachuseynli.algoritmatask.common.utils
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.NetworkRequest
+import android.os.Build
 
 object ConnectivityUtil {
+
     fun isOnline(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -16,21 +16,33 @@ object ConnectivityUtil {
         return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
-    private val connectivityReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            if (ConnectivityManager.CONNECTIVITY_ACTION == intent.action) {
-                val isConnected = isOnline(context)
+    private val networkCallback = object : ConnectivityManager.NetworkCallback() {
+        override fun onAvailable(network: android.net.Network) {
+            super.onAvailable(network)
+        }
 
-            }
+        override fun onLost(network: android.net.Network) {
+            super.onLost(network)
         }
     }
 
-    fun registerConnectivityReceiver(context: Context) {
-        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        context.registerReceiver(connectivityReceiver, filter)
+    fun registerNetworkCallback(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val connectivityManager =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkRequest = NetworkRequest.Builder().build()
+            connectivityManager.registerNetworkCallback(
+                networkRequest,
+                networkCallback
+            )
+        }
     }
 
-    fun unregisterConnectivityReceiver(context: Context) {
-        context.unregisterReceiver(connectivityReceiver)
+    fun unregisterNetworkCallback(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val connectivityManager =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            connectivityManager.unregisterNetworkCallback(networkCallback)
+        }
     }
 }

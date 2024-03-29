@@ -62,7 +62,7 @@ class MainViewModel @Inject constructor(
             socketRepository.deleteAllData()
             socketRepository.saveData(list)
             _socketModelList.value = list
-            _isLoading.value = false // Yükleme tamamlandı
+            _isLoading.value = false
         }
     }
 }
