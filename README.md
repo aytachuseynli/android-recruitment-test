@@ -13,7 +13,9 @@
 - MVVM
 - Material UI
 
-
+## Medium Article 
+- Websockets and Socket.IO: What They Are and How They’re Used
+- link -https://medium.com/@aytachuseynli70/websockets-and-socket-io-what-they-are-and-how-theyre-used-b582ed33696f
 
 
 ### Tələb 1
