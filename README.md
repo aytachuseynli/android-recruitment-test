@@ -1,4 +1,20 @@
-Android Recruitment test
+# Socket IO App
+
+![image](https://github.com/aytachuseynli/android-recruitment-test/assets/64212177/42debbf5-a3b7-4669-b1c0-d4b03b443f3f)
+
+## TECH STACK
+
+- Kotlin
+- Socket IO
+- Flow
+- Coroutines
+- Hilt for DI
+- Room DB
+- MVVM
+- Material UI
+
+
+
 
 ### Tələb 1
 Bu repozitoriyanı fork edin:
@@ -15,5 +31,3 @@ Aşağıdakiları tapşırıqları həyata keçirin:
 * WebSocket'dən alınan data'ları cache'ləmək (SQL Database istifadə etməklə)
 * Application'da WebSocket'in qoşulu olduğunu göstərən hər hansı bir visual indikator
 * Material UI
-
-Repozitoriya linki göndərin və cavab gözləyin.
