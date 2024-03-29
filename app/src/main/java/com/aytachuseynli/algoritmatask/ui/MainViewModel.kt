@@ -1,7 +1,6 @@
 package com.aytachuseynli.algoritmatask.ui
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aytachuseynli.algoritmatask.common.utils.ConnectivityUtil
@@ -10,7 +9,8 @@ import com.aytachuseynli.algoritmatask.data.repository.SocketRepository
 import convert
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,6 +30,8 @@ class MainViewModel @Inject constructor(
 
     fun fetchData(context: Context) {
         val isConnected = ConnectivityUtil.isOnline(context)
+        _isLoading.value = isConnected
+
         if (isConnected) {
             getDataFromUrl()
         } else {
@@ -44,7 +46,6 @@ class MainViewModel @Inject constructor(
     }
 
     private fun getDataFromUrl() {
-
         val socket = socketRepository.getFromUrl()
         socket.on("message") { args ->
             val array = Array<Any>(args.size) { 0 }
@@ -61,6 +62,7 @@ class MainViewModel @Inject constructor(
             socketRepository.deleteAllData()
             socketRepository.saveData(list)
             _socketModelList.value = list
+            _isLoading.value = false // Yükleme tamamlandı
         }
     }
 }

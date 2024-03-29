@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import com.aytachuseynli.algoritmatask.common.utils.ConnectivityUtil
 import com.aytachuseynli.algoritmatask.databinding.FragmentMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -37,7 +36,6 @@ class MainFragment : Fragment() {
         binding.progressBar.visibility = View.VISIBLE
         binding.recyclerView.adapter = adapter
 
-
         // Observe socket model list and update adapter
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.socketModelList.collect { socketList ->
@@ -51,7 +49,7 @@ class MainFragment : Fragment() {
             }
         }
 
-        // Observe connection status and update UI text color
+        // Observe connection status and update UI background color
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.socketIsConnected.collect { isConnected ->
                 val backgroundColor = if (isConnected) Color.GREEN else Color.RED
@@ -60,16 +58,13 @@ class MainFragment : Fragment() {
         }
 
         // Register connectivity receiver to listen for changes
-        registerConnectivityReceiver()
+        ConnectivityUtil.registerConnectivityReceiver(requireContext())
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-
-    private fun registerConnectivityReceiver() {
-        // Implement your connectivity receiver logic here
+        // Unregister connectivity receiver when fragment is destroyed
+        ConnectivityUtil.unregisterConnectivityReceiver(requireContext())
     }
 }
